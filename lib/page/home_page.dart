@@ -1,8 +1,6 @@
 import 'package:calculadora_de_imc/page/calculo_page.dart';
 import 'package:calculadora_de_imc/page/hist_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
