@@ -1,3 +1,4 @@
+import 'package:calculadora_de_imc/page/calculo_page.dart';
 import 'package:calculadora_de_imc/page/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
