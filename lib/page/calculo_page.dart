@@ -1,8 +1,11 @@
+import 'package:calculadora_de_imc/model/imc.dart';
 import 'package:calculadora_de_imc/page/hist_page.dart';
+import 'package:calculadora_de_imc/repositories/imc_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:calculadora_de_imc/page/home_page.dart';
+import 'package:calculadora_de_imc/model/imc_calculo.dart';
 
 class CalculoPage extends StatefulWidget {
   const CalculoPage({super.key});
@@ -16,34 +19,34 @@ class _CalculoPageState extends State<CalculoPage> {
   TextEditingController pesoController = TextEditingController(text: "");
   final FocusNode _alturaFocus = FocusNode();
   final FocusNode _pesoFocus = FocusNode();
-  String alturaTexto = "";
-  String pesoTexto = "";
-  double alturaDouble = 0;
-  double pesoDouble = 0;
 
-  void converteController() {
-    alturaTexto = alturaController.text.replaceAll(',', '.');
-    pesoTexto = pesoController.text.replaceAll(',', '.');
-    alturaDouble = double.parse(alturaTexto);
-    pesoDouble = double.parse(pesoTexto);
-  }
-
-  calcularIMC() {
-    converteController();
-    double IMC = pesoDouble / (alturaDouble * alturaDouble);
-    IMC = double.parse((IMC).toStringAsFixed(1));
-    return showDialog(
+  calcularIMC() async {
+    double IMC =
+        await calcularIMCValue(alturaController.text, pesoController.text);
+    showDialog(
       context: context,
       builder: (BuildContext bc) {
         return AlertDialog(
-          title: Text("O seu IMC é $IMC"),
+          title: Text(
+            "Resultado IMC:",
+            style:
+                TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold),
+          ),
+          content: Text(
+            "O seu IMC é $IMC",
+            style: TextStyle(fontSize: 20),
+          ),
           actions: [
             TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: const Text("Fechar")),
-            TextButton(onPressed: () {}, child: const Text("Conferir"))
+                child: const Text("Fechar",
+                    style: TextStyle(fontWeight: FontWeight.bold))),
+            TextButton(
+                onPressed: () {},
+                child: const Text("Conferir",
+                    style: TextStyle(fontWeight: FontWeight.bold)))
           ],
         );
       },

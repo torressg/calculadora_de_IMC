@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-class IMC {
+class imcClass {
   final String _id = UniqueKey().toString();
-  final data = DateTime.now();
+  final DateTime data = DateTime.now();
   double _peso = 0;
   double _altura = 0;
+  double _imc = 0;
 
-  IMC(this._peso, this._altura);
+  imcClass(this._peso, this._altura, this._imc);
 
   String get id => _id;
 
@@ -14,11 +15,17 @@ class IMC {
 
   double get altura => _altura;
 
+  double get imc => _imc;
+
   set peso(double peso) {
     _peso = peso;
   }
 
   set altura(double altura) {
     _altura = altura;
+  }
+
+  set imc(double imc) {
+    _imc = imc;
   }
 }
