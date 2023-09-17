@@ -5,6 +5,7 @@ Future<double> calcularIMCValue(String alturaTexto, String pesoTexto) async {
   double alturaDouble = double.parse(alturaTexto.replaceAll(',', '.'));
   double pesoDouble = double.parse(pesoTexto.replaceAll(',', '.'));
   double IMC = pesoDouble / (alturaDouble * alturaDouble);
-  await imcRepository.adicionarIMC(imcClass(pesoDouble, alturaDouble, IMC));
+  await imcRepository.adicionarIMC(
+      imcClass(pesoDouble, alturaDouble, (IMC).toStringAsFixed(1)));
   return double.parse((IMC).toStringAsFixed(1));
 }

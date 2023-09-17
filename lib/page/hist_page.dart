@@ -44,16 +44,24 @@ class _HistPageState extends State<HistPage> with WidgetsBindingObserver {
       children: [
         Expanded(
             child: ListView.builder(
-          itemCount: _imc.length,
-          itemBuilder: (BuildContext bc, int index) {
-            var imc = _imc[index];
-            return Dismissible(
-                key: Key(imc.id),
-                child: ListTile(
-                  title: Text("Imc: ${imc.imc}"),
-                ));
-          },
-        ))
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                itemCount: _imc.length,
+                itemBuilder: (BuildContext bc, int index) {
+                  var imc = _imc[index];
+                  return Card(
+                    elevation: 3,
+                    child: Column(
+                      children: [
+                        ListTile(
+                          title: Text("Seu IMC foi ${imc.imc}"),
+                          subtitle: Text(
+                              "Com seu peso ${imc.peso}, altura ${imc.altura} em ${imc.data}."),
+                        )
+                      ],
+                    ),
+                  );
+                }))
       ],
     );
   }
