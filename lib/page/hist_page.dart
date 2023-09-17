@@ -58,6 +58,13 @@ class _HistPageState extends State<HistPage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          "Histórico de IMCs",
+          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+        ),
         Expanded(
             child: ListView.builder(
                 padding:
