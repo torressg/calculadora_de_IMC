@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
             posicaoPagina = value;
           });
         },
-        children: const [CalculoPage(), HistPage()],
+        children: [CalculoPage(controller: controller), HistPage()],
       ),
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,

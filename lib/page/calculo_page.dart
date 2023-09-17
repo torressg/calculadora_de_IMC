@@ -6,9 +6,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:calculadora_de_imc/page/home_page.dart';
 import 'package:calculadora_de_imc/model/imc_calculo.dart';
+import 'package:calculadora_de_imc/page/home_page.dart';
 
 class CalculoPage extends StatefulWidget {
-  const CalculoPage({super.key});
+  final PageController controller;
+
+  const CalculoPage({Key? key, required this.controller}) : super(key: key);
 
   @override
   State<CalculoPage> createState() => _CalculoPageState();
@@ -19,22 +22,49 @@ class _CalculoPageState extends State<CalculoPage> {
   TextEditingController pesoController = TextEditingController(text: "");
   final FocusNode _alturaFocus = FocusNode();
   final FocusNode _pesoFocus = FocusNode();
+  var teste = HomePage();
+
+  msgIMC(imc) {
+    if (imc < 18.5) {
+      return "De acordo com a OMS, você está abaixo do peso.";
+    } else if (imc > 18.6 && imc < 24.9) {
+      return "De acordo com a OMS, você está com peso ideal.";
+    } else if (imc > 15 && imc < 29.9) {
+      return "De acordo com a OMS, você está levemente acima do peso.";
+    } else if (imc > 30 && imc < 34.9) {
+      return "De acordo com a OMS, você está com obesidade grau 1.";
+    } else if (imc > 35 && imc < 39.9) {
+      return "De acordo com a OMS, você está com obesidade grau 2.";
+    } else if (imc > 40) {
+      return "De acordo com a OMS, você está com obesidade grau 3.";
+    }
+  }
 
   calcularIMC() async {
     double IMC =
         await calcularIMCValue(alturaController.text, pesoController.text);
+    // ignore: use_build_context_synchronously
     showDialog(
       context: context,
       builder: (BuildContext bc) {
         return AlertDialog(
           title: Text(
-            "Resultado IMC:",
-            style:
-                TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold),
-          ),
-          content: Text(
             "O seu IMC é $IMC",
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                msgIMC(IMC),
+                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text("Confira os resultados anteriores.")
+            ],
           ),
           actions: [
             TextButton(
@@ -44,7 +74,12 @@ class _CalculoPageState extends State<CalculoPage> {
                 child: const Text("Fechar",
                     style: TextStyle(fontWeight: FontWeight.bold))),
             TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  widget.controller.nextPage(
+                      duration: Duration(milliseconds: 300),
+                      curve: Curves.easeInOut);
+                  Navigator.pop(context);
+                },
                 child: const Text("Conferir",
                     style: TextStyle(fontWeight: FontWeight.bold)))
           ],
