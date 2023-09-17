@@ -38,6 +38,22 @@ class _HistPageState extends State<HistPage> with WidgetsBindingObserver {
     setState(() {});
   }
 
+  msgIMC(imc) {
+    if (imc < 18.5) {
+      return "Você estava abaixo do peso.";
+    } else if (imc > 18.6 && imc < 24.9) {
+      return "Você estava com peso ideal.";
+    } else if (imc > 15 && imc < 29.9) {
+      return "Você estava levemente acima do peso.";
+    } else if (imc > 30 && imc < 34.9) {
+      return "Você estava com obesidade grau 1.";
+    } else if (imc > 35 && imc < 39.9) {
+      return "Você estava com obesidade grau 2.";
+    } else if (imc > 40) {
+      return "Você estava com obesidade grau 3.";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -56,7 +72,7 @@ class _HistPageState extends State<HistPage> with WidgetsBindingObserver {
                         ListTile(
                           title: Text("Seu IMC foi ${imc.imc}"),
                           subtitle: Text(
-                              "Com seu peso ${imc.peso}, altura ${imc.altura} em ${imc.data}."),
+                              "Com seu peso ${imc.peso}, altura ${imc.altura} em ${imc.data}. \n${msgIMC(double.parse(imc.imc))}"),
                         )
                       ],
                     ),

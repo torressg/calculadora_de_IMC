@@ -143,6 +143,8 @@ class _CalculoPageState extends State<CalculoPage> {
                     onFieldSubmitted: (value) {
                       _pesoFocus.unfocus();
                       calcularIMC();
+                      pesoController.text = "";
+                      alturaController.text = "";
                     },
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
@@ -171,6 +173,8 @@ class _CalculoPageState extends State<CalculoPage> {
                     child: ElevatedButton(
                         onPressed: () {
                           calcularIMC();
+                          pesoController.text = "";
+                          alturaController.text = "";
                         },
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(
