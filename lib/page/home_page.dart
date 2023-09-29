@@ -1,5 +1,7 @@
 import 'package:calculadora_de_imc/page/calculo_page.dart';
+import 'package:calculadora_de_imc/page/calculo_page_sqlite.dart';
 import 'package:calculadora_de_imc/page/hist_page.dart';
+import 'package:calculadora_de_imc/page/hist_page_sqlite.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -29,7 +31,7 @@ class _HomePageState extends State<HomePage> {
             posicaoPagina = value;
           });
         },
-        children: [CalculoPage(controller: controller), HistPage()],
+        children: [CalculoSQLitePage(controller: controller), HistSQLitePage()],
       ),
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,

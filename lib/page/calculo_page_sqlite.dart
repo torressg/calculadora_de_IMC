@@ -1,24 +1,27 @@
+import 'package:calculadora_de_imc/model/imc_sqlite_model.dart';
+import 'package:calculadora_de_imc/repositories/sqlite/imc_sqlite_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:calculadora_de_imc/page/home_page.dart';
 import 'package:calculadora_de_imc/model/imc_calculo.dart';
+import 'package:intl/intl.dart';
 
-class CalculoPage extends StatefulWidget {
+class CalculoSQLitePage extends StatefulWidget {
   final PageController controller;
 
-  const CalculoPage({Key? key, required this.controller}) : super(key: key);
+  const CalculoSQLitePage({Key? key, required this.controller}) : super(key: key);
 
   @override
-  State<CalculoPage> createState() => _CalculoPageState();
+  State<CalculoSQLitePage> createState() => _CalculoSQLitePageState();
 }
 
-class _CalculoPageState extends State<CalculoPage> {
+class _CalculoSQLitePageState extends State<CalculoSQLitePage> {
+  IMCSQLiteRepository imcRepository = IMCSQLiteRepository();
   TextEditingController alturaController = TextEditingController(text: "");
   TextEditingController pesoController = TextEditingController(text: "");
   final FocusNode _alturaFocus = FocusNode();
   final FocusNode _pesoFocus = FocusNode();
-  var teste = HomePage();
+  int id = 0;
 
   msgIMC(imc) {
     if (imc < 18.5) {
@@ -37,8 +40,21 @@ class _CalculoPageState extends State<CalculoPage> {
   }
 
   calcularIMC() async {
+    print(pesoController.text);
+    print(alturaController.text);
     double IMC =
         await calcularIMCValue(alturaController.text, pesoController.text);
+    String descricao = msgIMC(IMC);
+    String data = DateFormat("dd/MM/yyyy").format(DateTime.now());
+
+    IMCSQLiteModel novoRegistro = IMCSQLiteModel(
+      id: id, 
+      peso: double.parse(pesoController.text), 
+      altura: double.parse(alturaController.text), 
+      imc: IMC, 
+      data: data, 
+      desc: descricao
+    );
     // ignore: use_build_context_synchronously
     showDialog(
       context: context,
@@ -82,7 +98,10 @@ class _CalculoPageState extends State<CalculoPage> {
         );
       },
     );
+     await imcRepository.salvar(novoRegistro);
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -171,6 +190,7 @@ class _CalculoPageState extends State<CalculoPage> {
                           calcularIMC();
                           pesoController.text = "";
                           alturaController.text = "";
+                          
                         },
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(

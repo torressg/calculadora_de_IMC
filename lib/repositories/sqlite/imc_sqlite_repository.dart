@@ -9,12 +9,12 @@ class IMCSQLiteRepository {
     for (var element in result) {
       imcs.add(
         IMCSQLiteModel(
-          int.parse(element["id"].toString()), 
-          double.parse(["peso"].toString()),
-          double.parse(element["altura"].toString()), 
-          element["imc"].toString(), 
-          element["data"].toString(), 
-          element["desc"].toString()
+          id: int.parse(element["id"].toString()), 
+          peso: double.parse(["peso"].toString()),
+          altura: double.parse(element["altura"].toString()), 
+          imc: double.parse(element["imc"].toString()), 
+          data: element["data"].toString(), 
+          desc:element["desc"].toString()
         )
       );
     }
@@ -23,7 +23,7 @@ class IMCSQLiteRepository {
 
   Future<void> salvar(IMCSQLiteModel imcsqLiteModel) async {
     var db = await SQLiteDataBase().obterDataBase();
-    await db.rawInsert("INSERT INTO imchist (peso, altura, imc, desc, data) values(?, ?)",
+    await db.rawInsert("INSERT INTO imchist (peso, altura, imc, desc, data) values(?, ?, ?, ?, ?)",
       [
         imcsqLiteModel.peso,
         imcsqLiteModel.altura,

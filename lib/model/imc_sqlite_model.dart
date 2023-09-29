@@ -6,7 +6,7 @@ class IMCSQLiteModel {
   String _imc = "";
   String _desc = "";
 
-  IMCSQLiteModel(this._id, this._peso, this._altura, this._imc, this._data, this._desc);
+  IMCSQLiteModel({required double peso, required double altura, required double imc, required String data, required desc, required int id});
 
   int get id => _id;
 

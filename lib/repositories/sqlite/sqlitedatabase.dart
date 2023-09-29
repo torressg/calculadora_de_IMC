@@ -20,20 +20,12 @@ class SQLiteDataBase {
 
   return await openDatabase(
     path,
-    version: 2,
+    version: 1,
     onCreate: (Database db, int version) async {
       await db.execute(
-        'CREATE TABLE imchist(id INTEGER PRIMARY KEY, peso REAL, altura REAL, imc REAL, desc TEXT)',
+        'CREATE TABLE imchist(id INTEGER PRIMARY KEY AUTOINCREMENT, peso REAL, altura REAL, imc REAL, desc TEXT, data TEXT)',
       );
       print("Tabela imchist criada com sucesso.");
-    },
-    onUpgrade: (Database db, int oldVersion, int newVersion) async {
-      if (oldVersion < 2) {
-        await db.execute(
-          'ALTER TABLE imchist ADD COLUMN data TEXT',
-        );
-        print("Coluna 'data' adicionada com sucesso.");
-      }
     },
   );
 } 
